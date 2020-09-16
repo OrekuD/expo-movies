@@ -1,37 +1,32 @@
 import React from "react";
 import { StackScreenProps } from "@react-navigation/stack";
-import { View, StyleSheet, Image, Text, Animated } from "react-native";
-import { height, width } from "../../constants/Layout";
+import { View, StyleSheet, Image, Text } from "react-native";
+import { width } from "../../constants/Layout";
 import { RootStackParamList } from "../../types";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SharedElement } from "react-navigation-shared-element";
 
 const WIDTH = width * 0.9;
 
-const Product = ({
-  navigation,
-  route,
-}: StackScreenProps<RootStackParamList, "Product">) => {
+const Product = ({ route }: StackScreenProps<RootStackParamList, "Movie">) => {
   const { item } = route.params;
-  const { label, key, color, image } = item;
+  const { title, id, backdrop_path } = item;
 
   return (
     <View style={{ ...styles.container }}>
-      <SharedElement id={`item ${color}`}>
-        <Animated.Image
+      <SharedElement id={`item ${title}`}>
+        <Image
           style={{ ...styles.image }}
           resizeMode="cover"
-          source={image}
+          source={backdrop_path}
         />
       </SharedElement>
-      <SharedElement id={`item ${key}`}>
+      <SharedElement id={`item ${id}`}>
         <View
           style={{
             ...styles.card,
-            backgroundColor: color,
           }}
         >
-          <Text style={{ ...styles.text }}>{label}</Text>
+          <Text style={{ ...styles.text }}>{title}</Text>
         </View>
       </SharedElement>
     </View>
@@ -47,10 +42,10 @@ const styles = StyleSheet.create({
   card: {
     width: WIDTH,
     height: WIDTH * 0.5,
-    borderRadius: 12,
-    marginBottom: 20,
+    borderRadius: 5,
     alignSelf: "center",
     marginTop: -WIDTH * 0.25,
+    backgroundColor: "white",
   },
   text: {
     fontSize: 30,
@@ -58,6 +53,6 @@ const styles = StyleSheet.create({
   },
   image: {
     width: width,
-    height: 400,
+    height: width * 0.8,
   },
 });
