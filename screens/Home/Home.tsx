@@ -1,6 +1,12 @@
 import { StackScreenProps } from "@react-navigation/stack";
 import React, { useEffect, useRef, useState } from "react";
-import { View, StyleSheet, Animated, ActivityIndicator } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Animated,
+  ActivityIndicator,
+  FlatList,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { movies } from "../../data/movies";
 import { RootStackParamList, Response } from "../../types";
@@ -45,7 +51,7 @@ const Home = ({ navigation }: StackScreenProps<RootStackParamList, "Home">) => {
     <View style={{ ...styles.container }}>
       <Animated.FlatList
         data={movies}
-        keyExtractor={({ id }) => id}
+        keyExtractor={({ id }) => String(id)}
         horizontal
         pagingEnabled
         scrollEventThrottle={16}

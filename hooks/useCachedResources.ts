@@ -11,8 +11,9 @@ export default function useCachedResources() {
         SplashScreen.preventAutoHideAsync();
 
         await Font.loadAsync({
-          "Acumin-SemiBold": require("../assets/fonts/Acumin-Semibold.otf"),
-          "Acumin-Regular": require("../assets/fonts/Acumin-Regular.ttf"),
+          "Poppins-Medium": require("../assets/fonts/Poppins-Medium.ttf"),
+          "Poppins-SemiBold": require("../assets/fonts/Poppins-SemiBold.ttf"),
+          "Poppins-Regular": require("../assets/fonts/Poppins-Regular.ttf"),
         });
       } catch (e) {
         console.warn(e);
