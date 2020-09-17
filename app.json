@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "smaple2",
-    "slug": "smaple2",
+    "name": "expo-movies",
+    "slug": "expo-movies",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

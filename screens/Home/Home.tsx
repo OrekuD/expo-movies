@@ -11,8 +11,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { movies } from "../../data/movies";
 import { RootStackParamList, Response } from "../../types";
 import { Slide } from "../../components";
-
-const MOVIE_DB_API_KEY = "005d6a62314e432e6fe64e784f23f799";
+import { MOVIE_DB_API_KEY } from "../../constants/Api";
 
 const Home = ({ navigation }: StackScreenProps<RootStackParamList, "Home">) => {
   const { top: paddingTop } = useSafeAreaInsets();
@@ -32,25 +31,25 @@ const Home = ({ navigation }: StackScreenProps<RootStackParamList, "Home">) => {
     fetchData();
   }, []);
 
-  // if (data.length === 0) {
-  //   return (
-  //     <View
-  //       style={{
-  //         flex: 1,
-  //         alignItems: "center",
-  //         justifyContent: "center",
-  //         backgroundColor: "white",
-  //       }}
-  //     >
-  //       <ActivityIndicator size="large" color="purple" />
-  //     </View>
-  //   );
-  // }
+  if (data.length === 0) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "white",
+        }}
+      >
+        <ActivityIndicator size="large" color="purple" />
+      </View>
+    );
+  }
 
   return (
     <View style={{ ...styles.container }}>
       <Animated.FlatList
-        data={movies}
+        data={data}
         keyExtractor={({ id }) => String(id)}
         horizontal
         pagingEnabled

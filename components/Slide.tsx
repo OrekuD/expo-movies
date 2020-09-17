@@ -4,6 +4,7 @@ import { Text, StyleSheet, Animated, View, Image } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SharedElement } from "react-navigation-shared-element";
+import { IMAGE_BASE_URL } from "../constants/Api";
 import { height, width } from "../constants/Layout";
 import { Response, RootStackParamList } from "../types";
 import { getGenres } from "../utils/getGenres";
@@ -44,7 +45,7 @@ const Slide = ({ item, navigation, scrollX, index }: SlideProps) => {
         <Image
           style={{ ...styles.image, marginTop: top, marginBottom: bottom }}
           resizeMode="cover"
-          source={backdrop_path}
+          source={{ uri: IMAGE_BASE_URL + poster_path }}
         />
       </SharedElement>
       <Animated.View
@@ -60,7 +61,7 @@ const Slide = ({ item, navigation, scrollX, index }: SlideProps) => {
             <Image
               style={styles.poster_image}
               resizeMode="cover"
-              source={poster_path}
+              source={{ uri: IMAGE_BASE_URL + poster_path }}
             />
             <View style={styles.content}>
               <Text style={styles.text} numberOfLines={4}>
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     width: WIDTH,
     height: WIDTH * 0.55,
     borderRadius: 5,
-    marginBottom: (width * 0.1) / 3,
+    marginBottom: (width * 0.1) / 4,
     alignSelf: "center",
     backgroundColor: "white",
     flexDirection: "row",

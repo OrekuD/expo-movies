@@ -1,11 +1,19 @@
 import React from "react";
 import { StackScreenProps } from "@react-navigation/stack";
-import { View, StyleSheet, Image, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  Animated,
+  ScrollView,
+} from "react-native";
 import { width } from "../../constants/Layout";
 import { RootStackParamList } from "../../types";
 import { SharedElement } from "react-navigation-shared-element";
 import { StarRatings } from "../../components";
 import { getGenres } from "../../utils/getGenres";
+import { IMAGE_BASE_URL } from "../../constants/Api";
 
 const WIDTH = width * 0.9;
 
@@ -18,16 +26,21 @@ const Product = ({ route }: StackScreenProps<RootStackParamList, "Movie">) => {
     vote_average,
     poster_path,
     genre_ids,
+    overview,
   } = item;
   const genres = getGenres(genre_ids);
 
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={{
+        backgroundColor: "#f8f8f8",
+      }}
+    >
       <SharedElement id={`item ${title}`}>
         <Image
           style={{ ...styles.image }}
           resizeMode="cover"
-          source={backdrop_path}
+          source={{ uri: IMAGE_BASE_URL + poster_path }}
         />
       </SharedElement>
       <SharedElement id={`item ${id}`}>
@@ -35,9 +48,9 @@ const Product = ({ route }: StackScreenProps<RootStackParamList, "Movie">) => {
           <Image
             style={styles.poster_image}
             resizeMode="cover"
-            source={poster_path}
+            source={{ uri: IMAGE_BASE_URL + poster_path }}
           />
-          <View style={styles.content}>
+          <View style={styles.cardContent}>
             <Text style={styles.text} numberOfLines={4}>
               {title}
             </Text>
@@ -52,7 +65,11 @@ const Product = ({ route }: StackScreenProps<RootStackParamList, "Movie">) => {
           </View>
         </View>
       </SharedElement>
-    </View>
+      <Animated.View style={{ ...styles.content }}>
+        <Text style={styles.text}>Storyline</Text>
+        <Text style={styles.overview}>{overview}</Text>
+      </Animated.View>
+    </ScrollView>
   );
 };
 
@@ -80,7 +97,7 @@ const styles = StyleSheet.create({
     width: WIDTH * 0.5 * 0.667,
     height: WIDTH * 0.5,
   },
-  content: {
+  cardContent: {
     flex: 1,
     paddingLeft: 10,
   },
@@ -106,5 +123,15 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontFamily: "Poppins-Regular",
     marginTop: 2,
+  },
+  content: {
+    flex: 1,
+    padding: (width * 0.1) / 2,
+  },
+  overview: {
+    fontFamily: "Poppins-Regular",
+    fontSize: 18,
+    lineHeight: 24,
+    marginTop: 10,
   },
 });

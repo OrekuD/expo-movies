@@ -1,5 +1,3 @@
-import { ImageRequireSource } from "react-native";
-
 export type RootStackParamList = {
   Home: undefined;
   Movie: { item: Response };
@@ -20,10 +18,10 @@ export interface Response {
   original_title: string;
   original_name?: string;
   genre_ids: Array<number>;
-  backdrop_path: ImageRequireSource;
+  backdrop_path: string;
   adult: boolean;
   overview: string;
-  poster_path: string | ImageRequireSource;
+  poster_path: string | string;
   popularity: number;
   media_type: "tv" | "movie";
 }
