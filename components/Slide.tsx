@@ -5,12 +5,10 @@ import { RectButton } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SharedElement } from "react-navigation-shared-element";
 import { IMAGE_BASE_URL } from "../constants/Api";
-import { height, width } from "../constants/Layout";
+import { height, SLIDE_WIDTH, SPACING, width } from "../constants/Layout";
 import { Response, RootStackParamList } from "../types";
 import { getGenres } from "../utils/getGenres";
 import StarRatings from "./StarRatings";
-
-const WIDTH = width * 0.9;
 
 interface SlideProps {
   item: Response;
@@ -35,51 +33,23 @@ const Slide = ({ item, navigation, scrollX, index }: SlideProps) => {
 
   const translateY = scrollX.interpolate({
     inputRange: [(index - 1) * width, index * width, (index + 1) * width],
-    outputRange: [WIDTH * 0.5, 0, WIDTH * 0.5],
+    outputRange: [SLIDE_WIDTH * 0.5, 0, SLIDE_WIDTH * 0.5],
     extrapolate: "clamp",
   });
 
   return (
-    <View style={styles.container}>
-      <SharedElement id={`item ${title}`} style={{ flex: 1 }}>
+    <RectButton
+      onPress={() => navigation.navigate("Movie", { item })}
+      style={styles.container}
+    >
+      <SharedElement id={`item ${poster_path}`} style={{ flex: 1 }}>
         <Image
-          style={{ ...styles.image, marginTop: top, marginBottom: bottom }}
+          style={styles.image}
           resizeMode="cover"
           source={{ uri: IMAGE_BASE_URL + poster_path }}
         />
       </SharedElement>
-      <Animated.View
-        style={{ ...styles.cardContainer, transform: [{ translateY }] }}
-      >
-        <SharedElement id={`item ${id}`}>
-          <RectButton
-            style={{
-              ...styles.card,
-            }}
-            onPress={() => navigation.push("Movie", { item })}
-          >
-            <Image
-              style={styles.poster_image}
-              resizeMode="cover"
-              source={{ uri: IMAGE_BASE_URL + poster_path }}
-            />
-            <View style={styles.content}>
-              <Text style={styles.text} numberOfLines={4}>
-                {title}
-              </Text>
-              <StarRatings rating={vote_average} />
-              <View style={styles.row}>
-                {genres.map((genre) => (
-                  <View key={genre} style={styles.badge}>
-                    <Text style={styles.badgeText}>{genre}</Text>
-                  </View>
-                ))}
-              </View>
-            </View>
-          </RectButton>
-        </SharedElement>
-      </Animated.View>
-    </View>
+    </RectButton>
   );
 };
 
@@ -87,17 +57,14 @@ export default Slide;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    width,
-    justifyContent: "flex-end",
+    width: SLIDE_WIDTH,
+    height: SLIDE_WIDTH * 1.5,
     overflow: "hidden",
+    marginRight: SPACING,
   },
   image: {
-    width: width * 0.95,
-    height,
+    ...StyleSheet.absoluteFillObject,
     borderRadius: 10,
-    alignSelf: "center",
-    overflow: "hidden",
   },
   cardContainer: {
     position: "absolute",
@@ -105,8 +72,8 @@ const styles = StyleSheet.create({
     width,
   },
   card: {
-    width: WIDTH,
-    height: WIDTH * 0.55,
+    width: SLIDE_WIDTH,
+    height: SLIDE_WIDTH * 0.55,
     borderRadius: 5,
     marginBottom: (width * 0.1) / 4,
     alignSelf: "center",
@@ -115,8 +82,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   poster_image: {
-    width: WIDTH * 0.5 * 0.667,
-    height: WIDTH * 0.5,
+    width: SLIDE_WIDTH * 0.5 * 0.667,
+    height: SLIDE_WIDTH * 0.5,
   },
   content: {
     flex: 1,

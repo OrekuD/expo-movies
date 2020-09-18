@@ -21,7 +21,7 @@ const RootNavigation = () => {
         component={Movie}
         sharedElementsConfig={(route) => {
           const { item } = route.params;
-          return [`item ${item.title}`, `item ${item.id}`];
+          return [`item ${item.poster_path}`];
         }}
         options={{
           gestureEnabled: false,
